@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
+using News0.Domain.Entities;
 
-namespace News0.Domain.Entities
+namespace News0.Application
 {
-    public class NewsContextDomain : DbContext
+    public class NewsContextApplication : DbContext
     {
-        public NewsContextDomain() : base() { }
+        public NewsContextApplication() : base() { }
 
         public DbSet<Category> Categories { get; set; }
         public DbSet<CategoryTranslation> CategoryTranslations { get; set; }

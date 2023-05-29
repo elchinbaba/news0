@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using News0.Application;
 using News0.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace News0.Infrastructure
 {
-    public class NewsContext : NewsContextDomain
+    public class NewsContext : NewsContextApplication
     {
         public NewsContext() : base() { }
 

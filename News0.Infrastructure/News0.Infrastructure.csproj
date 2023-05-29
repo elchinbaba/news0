@@ -14,6 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\News0.Application\News0.Application.csproj" />
     <ProjectReference Include="..\News0.Domain\News0.Domain.csproj" />
   </ItemGroup>
 
