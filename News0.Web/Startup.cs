@@ -45,6 +45,12 @@ namespace News0.Web
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
+                    name: "news",
+                    pattern: "News/{id}",
+                    defaults: new { controller = "News", action = "Details" }
+                );
+
+                endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });

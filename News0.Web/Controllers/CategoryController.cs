@@ -8,7 +8,7 @@ using News0.Application.Services.DbOperations;
 
 namespace News0.Web.Controllers
 {
-    public class Category : Controller
+    public class CategoryController : Controller
     {
         public IActionResult Index()
         {
