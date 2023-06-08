@@ -1,15 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace News0.Application.Services.DbOperations
 {
-    public class NewsService
+    public class NewsService : Domain.Repositories.NewsRepositoryDomain
     {
         private readonly NewsContextApplication _context;
         public NewsService(NewsContextApplication context)
         {
             _context = context;
+        }
+        public List<Domain.Entities.PostTranslation> Select()
+        {
+            return _context.PostTranslations.ToList();
+        }
+
+        public Domain.Entities.PostTranslation Select(int id)
+        {
+            return _context.PostTranslations.Find(id);
         }
 
         public void Create(Domain.Entities.PostTranslation news)

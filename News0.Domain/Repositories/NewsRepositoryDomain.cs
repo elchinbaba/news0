@@ -6,10 +6,10 @@ namespace News0.Domain.Repositories
 {
     public interface NewsRepositoryDomain
     {
-        public void Select();
-        public void Select(int id);
-        public void Create(Entities.Category category);
-        public void Update(Entities.Category category);
-        public void Delete(Entities.Category category);
+        public List<Entities.PostTranslation> Select();
+        public Entities.PostTranslation Select(int id);
+        public void Create(Entities.PostTranslation postTranslation);
+        public void Update(Entities.PostTranslation postTranslation);
+        public void Delete(Entities.PostTranslation postTranslation);
     }
 }
