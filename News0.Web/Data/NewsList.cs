@@ -14,6 +14,7 @@ namespace News0.Web.Data
                 Id = 1,
                 Title = "Hello Everyone",
                 Content = "This is our first news",
+                Language = "Eng",
                 PublishDate = DateTime.Now
             },
             new Models.NewsViewModel()
@@ -21,6 +22,7 @@ namespace News0.Web.Data
                 Id = 2,
                 Title = "Hi everyone",
                 Content = "This is our second news",
+                Language = "Eng",
                 PublishDate = DateTime.Now
             }
         };
