@@ -10,6 +10,10 @@ namespace News0.Application
     {
         public NewsContextApplication() : base() { }
 
+        public NewsContextApplication(DbContextOptions<NewsContextApplication> options) : base(options)
+        {
+        }
+
         public DbSet<Category> Categories { get; set; }
         public DbSet<CategoryTranslation> CategoryTranslations { get; set; }
         public DbSet<Hashtag> Hashtags { get; set; }

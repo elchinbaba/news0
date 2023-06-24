@@ -7,6 +7,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 
 namespace News0.Web
 {
@@ -22,6 +24,18 @@ namespace News0.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //services.AddAutoMapper(typeof(Application.Mapping.MappingProfile)); // Register AutoMapper and specify the assembly containing the mapping profiles
+            //services.AddAutoMapper(typeof(Data.Mapping.MappingProfile));
+            //services.AddAutoMapper(typeof(MappingProfile));
+            //services.AddAutoMapper(typeof(Application.Mapping.MappingProfile), typeof(Data.Mapping.MappingProfile));
+
+            //services.AddAutoMapper(typeof(Startup));
+
+            services.AddDbContext<Application.NewsContextApplication>(options =>
+                options.UseSqlServer(@"Server=WIN-D6GRQOTSRKP\SQLEXPRESS;Database=News0;Trusted_Connection=True"));
+
+            //services.AddScoped<Infrastructure.NewsContext>();
+
             services.AddControllersWithViews();
 
             services.AddDistributedMemoryCache(); // Required for session storage
@@ -30,6 +44,17 @@ namespace News0.Web
                 options.Cookie.HttpOnly = true;
                 options.Cookie.IsEssential = true;
             });
+
+            services.AddScoped<Application.Services.DbOperations.NewsService>();
+
+            var mapperConfig = new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile<Application.Mapping.MappingProfile>(); // Add your mapping profile here
+                cfg.AddProfile<Data.Mapping.MappingProfile>();
+            });
+
+            IMapper mapper = mapperConfig.CreateMapper();
+            services.AddSingleton(mapper);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -53,11 +78,17 @@ namespace News0.Web
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute(
-                    name: "news",
-                    pattern: "News/{id}",
-                    defaults: new { controller = "News", action = "Details" }
-                );
+                /*  endpoints.MapControllerRoute(
+                    name: "admin-news",
+                    pattern: "Admin/News/{id}",
+                    defaults: new { controller = "Admin", action = "NewsDetails" }
+                );*/
+
+                //endpoints.MapControllerRoute(
+                //    name: "news",
+                //    pattern: "News/{id}",
+                //    defaults: new { controller = "News", action = "Details" }
+                //);
 
                 endpoints.MapControllerRoute(
                     name: "default",

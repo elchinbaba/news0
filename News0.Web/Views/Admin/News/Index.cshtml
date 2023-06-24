@@ -20,7 +20,7 @@
                         <div class="card-body">
                             <h5 class="card-title">@news.Title<span class="float-right">@news.Language</span></h5>
                             <p class="card-text">@news.Title</p>
-                            <a asp-controller="News" asp-action="Details" asp-route-id="@news.Id" class="btn btn-primary">Read More</a>
+                            <a asp-action="NewsDetails" asp-route-id="@news.Id" class="btn btn-primary">Read More</a>
                             <a asp-action="NewsDelete" class="btn btn-danger float-right">Delete</a>
                             <a asp-action="NewsEdit" class="btn btn-primary float-right">Edit</a>
                         </div>

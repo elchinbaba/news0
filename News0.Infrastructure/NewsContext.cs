@@ -10,7 +10,9 @@ namespace News0.Infrastructure
     public class NewsContext : NewsContextApplication
     {
         public NewsContext() : base() { }
-
+        public NewsContext(DbContextOptions<NewsContextApplication> options) : base(options)
+        {
+        }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(@"Server=WIN-D6GRQOTSRKP\SQLEXPRESS;Database=News0;Trusted_Connection=True");

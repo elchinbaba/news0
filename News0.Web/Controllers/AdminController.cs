@@ -4,19 +4,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using AutoMapper;
+using News0.Application.Services.DbOperations;
 
 namespace News0.Web.Controllers
 {
     public class AdminController : Controller
     {
-        private bool IsAuthorized()
-        {
-            if (HttpContext.Session.GetInt32("Id") == null)
-            {
-                return false;
-            }
+        private readonly NewsService _newsService;
+        private readonly IMapper _mapper;
 
-            return true;
+        public AdminController(NewsService newsService, IMapper mapper)
+        {
+            _newsService = newsService;
+            _mapper = mapper;
         }
 
         public IActionResult Index()
@@ -30,7 +31,9 @@ namespace News0.Web.Controllers
         }
         public IActionResult News()
         {
-            return View("News/Index", Data.NewsList.All);
+            var newsDtos = _newsService.Select();
+
+            return View("News/Index", _mapper.Map<List<Models.NewsViewModel>>(newsDtos));
         }
 
         [Route("Admin/News/Create")]
@@ -39,11 +42,23 @@ namespace News0.Web.Controllers
             return View("News/Create");
         }
 
-        [Route("News/Details")]
-        public IActionResult NewsDetails()
-        {
-            return View("News/Details");
-        }
+        //[Route("Admin/News/{id:int}")]
+        //public IActionResult NewsDetails(int id)
+        //{
+        //    var pt = new Application.Services.DbOperations.NewsService(new Infrastructure.NewsContext()).Select(id);
+        //    if (pt == null)
+        //    {
+        //        return RedirectToAction("NotFound", "Home");
+        //    }
+
+        //    return View("News/Details", new Models.NewsViewModel
+        //    {
+        //        Id = pt.Id,
+        //        Title = pt.Title,
+        //        Content = pt.Content,
+        //        PublishDate = pt.PublishDate
+        //    });
+        //}
 
         [Route("Admin/News/Edit")]
         public IActionResult NewsEdit()
@@ -55,6 +70,16 @@ namespace News0.Web.Controllers
         public IActionResult NewsDelete()
         {
             return View("News/Delete");
+        }
+
+        private bool IsAuthorized()
+        {
+            if (HttpContext.Session.GetInt32("Id") == null)
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }
