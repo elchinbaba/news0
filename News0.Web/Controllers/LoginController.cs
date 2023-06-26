@@ -24,7 +24,7 @@ namespace News0.Web.Controllers
                 return RedirectToAction("Index");
             }
 
-            Models.UserViewModel realUser = Data.UsersList.All.Where(u => u.Email.Equals(user.Email) && u.Password.Equals(user.Password)).FirstOrDefault();
+            Models.UserViewModel realUser = Data.UserList.All.Where(u => u.Email.Equals(user.Email) && u.Password.Equals(user.Password)).FirstOrDefault();
             if (realUser == null)
             {
                 return RedirectToAction("Index");
@@ -43,7 +43,7 @@ namespace News0.Web.Controllers
                 return RedirectToAction("Index");
             }
 
-            return View(Data.UsersList.All.Find(u => u.Id == sessionId));
+            return View(Data.UserList.All.Find(u => u.Id == sessionId));
         }
     }
 }

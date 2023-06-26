@@ -21,33 +21,25 @@ namespace News0.Application.Services.DbOperations
             var postTranslations = _context.PostTranslations.ToList();
 
             return _mapper.Map<List<Domain.Dtos.NewsDto>>(postTranslations);
-
-            //return _context.PostTranslations.ToList().Select(pt => new Domain.Dtos.NewsDto
-            //{
-            //    Id = pt.Id,
-            //    Title = pt.Title,
-            //    Content = pt.Content,
-            //    Language = pt.Language.Name,
-            //    PublishDate = pt.PublishDate
-            //}).ToList();
         }
 
         public Domain.Dtos.NewsDto Select(int id)
         {
-            Domain.Entities.PostTranslation postTranslation = _context.PostTranslations.Find(id);
-            return new Domain.Dtos.NewsDto
-            {
-                Id = postTranslation.Id,
-                Title = postTranslation.Title,
-                Content = postTranslation.Content,
-                Language = postTranslation.Language.Name,
-                PublishDate = postTranslation.PublishDate
-            };
+            var postTranslation = _context.PostTranslations.Find(id);
+
+            return _mapper.Map<Domain.Dtos.NewsDto>(postTranslation);
         }
 
-        public void Create(Domain.Entities.PostTranslation news)
+        public void Create(Domain.Dtos.NewsDto newsDto)
         {
-            _context.PostTranslations.Add(news);
+            var postEntity = _mapper.Map<Domain.Entities.Post>(newsDto);
+            var post = _context.Posts.Add(postEntity);
+            _context.SaveChanges();
+
+            var postTranslation = _mapper.Map<Domain.Entities.PostTranslation>(newsDto);
+            postTranslation.PostId = post.Entity.Id;
+
+            _context.PostTranslations.Add(postTranslation);
             _context.SaveChanges();
         }
 

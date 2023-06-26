@@ -8,7 +8,7 @@ namespace News0.Domain.Repositories
     {
         public List<Dtos.NewsDto> Select();
         public Dtos.NewsDto Select(int id);
-        public void Create(Entities.PostTranslation postTranslation);
+        public void Create(Dtos.NewsDto newsDto);
         public void Update(Entities.PostTranslation postTranslation);
         public void Delete(Entities.PostTranslation postTranslation);
     }

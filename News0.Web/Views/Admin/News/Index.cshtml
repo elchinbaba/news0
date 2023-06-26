@@ -19,7 +19,7 @@
                         <img src="https://via.placeholder.com/400x200" class="card-img-top" alt="News Image">
                         <div class="card-body">
                             <h5 class="card-title">@news.Title<span class="float-right">@news.Language</span></h5>
-                            <p class="card-text">@news.Title</p>
+                            <p class="card-text">@news.Content</p>
                             <a asp-action="NewsDetails" asp-route-id="@news.Id" class="btn btn-primary">Read More</a>
                             <a asp-action="NewsDelete" class="btn btn-danger float-right">Delete</a>
                             <a asp-action="NewsEdit" class="btn btn-primary float-right">Edit</a>

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using AutoMapper;
 using News0.Application.Services.DbOperations;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace News0.Web.Controllers
 {
@@ -39,26 +40,51 @@ namespace News0.Web.Controllers
         [Route("Admin/News/Create")]
         public IActionResult NewsCreate()
         {
-            return View("News/Create");
+            var model = new Models.NewsCreationViewModel
+            {
+                Categories = GetCategorySelectList(),
+                Languages = GetLanguageSelectList()
+            };
+
+            return View("News/Create", model);
         }
 
-        //[Route("Admin/News/{id:int}")]
-        //public IActionResult NewsDetails(int id)
-        //{
-        //    var pt = new Application.Services.DbOperations.NewsService(new Infrastructure.NewsContext()).Select(id);
-        //    if (pt == null)
-        //    {
-        //        return RedirectToAction("NotFound", "Home");
-        //    }
+        [Route("Admin/News/Create")]
+        [HttpPost]
+        public IActionResult NewsCreate(Models.NewsCreationViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                // Mapping from NewsCreationViewModel to NewsDto
+                var newsDto = _mapper.Map<Domain.Dtos.NewsDto>(model);
+                newsDto.PublisherId = (int)HttpContext.Session.GetInt32("Id");
 
-        //    return View("News/Details", new Models.NewsViewModel
-        //    {
-        //        Id = pt.Id,
-        //        Title = pt.Title,
-        //        Content = pt.Content,
-        //        PublishDate = pt.PublishDate
-        //    });
-        //}
+                // Call your service or repository method to save the news
+                _newsService.Create(newsDto);
+
+                // Redirect to the desired page, e.g., the list of news
+                return RedirectToAction("Index", "News");
+            }
+
+            model.Categories = GetCategorySelectList();
+            model.Languages = GetLanguageSelectList();
+
+            // If the model state is not valid, return the view with validation errors
+            return View("News/Create", model);
+        }
+
+
+        [Route("Admin/News/{id:int}")]
+        public IActionResult NewsDetails(int id)
+        {
+            var newsDto = _newsService.Select(id);
+            if (newsDto == null)
+            {
+                return RedirectToAction("NotFound", "Home");
+            }
+
+            return View("News/Details", _mapper.Map<Models.NewsViewModel>(newsDto));
+        }
 
         [Route("Admin/News/Edit")]
         public IActionResult NewsEdit()
@@ -80,6 +106,22 @@ namespace News0.Web.Controllers
             }
 
             return true;
+        }
+
+        private IEnumerable<SelectListItem> GetCategorySelectList()
+        {
+            // Retrieve categories from the database or any other source
+            // and return them as a SelectList
+            var categories = Data.CategoryList.All;
+            return new SelectList(categories, "Id", "Name");
+        }
+
+        private IEnumerable<SelectListItem> GetLanguageSelectList()
+        {
+            // Retrieve languages from the database or any other source
+            // and return them as a SelectList
+            var languages = Data.LanguageList.All;
+            return new SelectList(languages, "Id", "Name");
         }
     }
 }

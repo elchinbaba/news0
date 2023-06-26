@@ -24,32 +24,18 @@ namespace News0.Web.Controllers
             var newsDtos = _newsService.Select();
 
             return View("Index", _mapper.Map<List<Models.NewsViewModel>>(newsDtos));
-
-            //return View("Index", .Select(pt => new Models.NewsViewModel
-            //{
-            //    Id = pt.Id,
-            //    Title = pt.Title,
-            //    Content = pt.Content,
-            //    PublishDate = pt.PublishDate
-            //}).ToList());
         }
 
-        //[Route("News/{id:int}")]
-        //public IActionResult Details(int id)
-        //{
-        //    //var newsDTO = new NewsService(new Infrastructure.NewsContext()).Select(id);
-        //    //if (newsDTO == null)
-        //    //{
-        //    //    return RedirectToAction("NotFound", "Home");
-        //    //}
+        [Route("News/{id:int}")]
+        public IActionResult Details(int id)
+        {
+            var newsDto = _newsService.Select(id);
+            if (newsDto == null)
+            {
+                return RedirectToAction("NotFound", "Home");
+            }
 
-        //    //return View(new Models.NewsViewModel
-        //    //{
-        //    //    Id = newsDTO.Id,
-        //    //    Title = newsDTO.Title,
-        //    //    Content = newsDTO.Content,
-        //    //    PublishDate = newsDTO.PublishDate
-        //    //});
-        //}
+            return View(_mapper.Map<Models.NewsViewModel>(newsDto));
+        }
     }
 }
