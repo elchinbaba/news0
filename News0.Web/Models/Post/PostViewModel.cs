@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace News0.Web.Models
+namespace News0.Web.Models.Post
 {
-    public class NewsViewModel
+    public class PostViewModel
     {
         public int Id { get; set; }
         public string Title { get; set; }

@@ -8,11 +8,11 @@ namespace News0.Web.Data.Mapping
     {
         public MappingProfile()
         {
-            CreateMap<Domain.Dtos.NewsDto, Models.NewsViewModel>();
+            CreateMap<Domain.Dtos.PostDto, Models.Post.PostViewModel>();
             //CreateMap<Models.NewsViewModel, Domain.Dtos.NewsDto>();
-            CreateMap<Models.NewsCreationViewModel, Domain.Dtos.NewsDto>()
-                .ForMember(dest => dest.Language, opt => opt.MapFrom(src => new Domain.Entities.Language { Id = src.LanguageId }))
-                .ForMember(dest => dest.Category, opt => opt.MapFrom(src => new Domain.Entities.Category { Id = src.CategoryId }))
+            CreateMap<Models.Post.PostCreationViewModel, Domain.Dtos.PostDto>()
+                .ForMember(dest => dest.Language, opt => opt.Ignore())
+                .ForMember(dest => dest.Category, opt => opt.Ignore())
                 .ForMember(dest => dest.Title, opt => opt.MapFrom(src => src.Title))
                 .ForMember(dest => dest.Content, opt => opt.MapFrom(src => src.Content));
         }

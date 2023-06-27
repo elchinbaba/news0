@@ -4,9 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace News0.Web.Models
+namespace News0.Web.Models.Post
 {
-    public class NewsCreationViewModel
+    public class PostCreationViewModel
     {
         public int Id { get; set; }
         public string Title { get; set; }

@@ -45,7 +45,10 @@ namespace News0.Web
                 options.Cookie.IsEssential = true;
             });
 
-            services.AddScoped<Application.Services.DbOperations.NewsService>();
+            services.AddScoped<Application.Services.DbOperations.Services>();
+            services.AddScoped<Application.Services.DbOperations.PostService>();
+            services.AddScoped<Application.Services.DbOperations.CategoryService>();
+            services.AddScoped<Application.Services.DbOperations.LanguageService>();
 
             var mapperConfig = new MapperConfiguration(cfg =>
             {

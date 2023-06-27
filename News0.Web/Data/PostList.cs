@@ -5,11 +5,11 @@ using System.Threading.Tasks;
 
 namespace News0.Web.Data
 {
-    static public class NewsList
+    static public class PostList
     {
-        static public List<Models.NewsViewModel> All = new List<Models.NewsViewModel>()
+        static public List<Models.Post.PostViewModel> All = new List<Models.Post.PostViewModel>()
         {
-            new Models.NewsViewModel()
+            new Models.Post.PostViewModel()
             {
                 Id = 1,
                 Title = "Hello Everyone",
@@ -17,7 +17,7 @@ namespace News0.Web.Data
                 Language = "Eng",
                 PublishDate = DateTime.Now
             },
-            new Models.NewsViewModel()
+            new Models.Post.PostViewModel()
             {
                 Id = 2,
                 Title = "Hi everyone",

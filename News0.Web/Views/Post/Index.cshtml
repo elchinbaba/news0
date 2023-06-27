@@ -1,4 +1,4 @@
-﻿@model List<News0.Web.Models.NewsViewModel>
+﻿@model List<News0.Web.Models.Post.PostViewModel>
 
 @{
     ViewData["Title"] = "News Website";
@@ -12,14 +12,14 @@
             <h1>Latest News</h1>
             <!-- News Articles -->
             @{
-                foreach (NewsViewModel news in Model)
+                foreach (News0.Web.Models.Post.PostViewModel post in Model)
                 {
                     <div class="card mb-4">
                         <img src="https://via.placeholder.com/400x200" class="card-img-top" alt="News Image">
                         <div class="card-body">
-                            <h5 class="card-title">@news.Title<span class="float-right">@news.Language</span></h5>
-                            <p class="card-text">@news.Title</p>
-                            <a asp-action="Details" asp-route-id="@news.Id" class="btn btn-primary">Read More</a>
+                            <h5 class="card-title">@post.Title<span class="float-right">@post.Language</span></h5>
+                            <p class="card-text">@post.Title</p>
+                            <a asp-action="Details" asp-route-id="@post.Id" class="btn btn-primary">Read More</a>
                         </div>
                     </div>
                 }

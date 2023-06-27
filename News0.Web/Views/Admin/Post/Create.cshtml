@@ -1,4 +1,4 @@
-﻿@model NewsCreationViewModel
+﻿@model News0.Web.Models.Post.PostCreationViewModel
 
 @{
     ViewData["Title"] = "Add News";
@@ -18,7 +18,7 @@
 <div class="container">
     <h1>Add News</h1>
     <hr />
-    <form method="post" action="/Admin/News/Create">
+    <form method="post">
         <div class="form-group">
             <label for="title">Title</label>
             <input type="text" class="form-control" id="title" name="Title" required>

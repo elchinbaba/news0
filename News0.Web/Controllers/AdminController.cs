@@ -12,12 +12,12 @@ namespace News0.Web.Controllers
 {
     public class AdminController : Controller
     {
-        private readonly NewsService _newsService;
+        private readonly Services _services;
         private readonly IMapper _mapper;
 
-        public AdminController(NewsService newsService, IMapper mapper)
+        public AdminController(Services services, IMapper mapper)
         {
-            _newsService = newsService;
+            _services = services;
             _mapper = mapper;
         }
 
@@ -30,72 +30,71 @@ namespace News0.Web.Controllers
 
             return View();
         }
-        public IActionResult News()
+        public IActionResult Post()
         {
-            var newsDtos = _newsService.Select();
+            var postDtos = _services.postService.Select();
 
-            return View("News/Index", _mapper.Map<List<Models.NewsViewModel>>(newsDtos));
+            return View("Post/Index", _mapper.Map<List<Models.Post.PostViewModel>>(postDtos));
         }
 
-        [Route("Admin/News/Create")]
-        public IActionResult NewsCreate()
+        [Route("Admin/Post/Create")]
+        public IActionResult PostCreate()
         {
-            var model = new Models.NewsCreationViewModel
+            var model = new Models.Post.PostCreationViewModel
             {
                 Categories = GetCategorySelectList(),
                 Languages = GetLanguageSelectList()
             };
 
-            return View("News/Create", model);
+            return View("Post/Create", model);
         }
 
-        [Route("Admin/News/Create")]
+        [Route("Admin/Post/Create")]
         [HttpPost]
-        public IActionResult NewsCreate(Models.NewsCreationViewModel model)
+        public IActionResult PostCreate(Models.Post.PostCreationViewModel model)
         {
             if (ModelState.IsValid)
             {
-                // Mapping from NewsCreationViewModel to NewsDto
-                var newsDto = _mapper.Map<Domain.Dtos.NewsDto>(model);
-                newsDto.PublisherId = (int)HttpContext.Session.GetInt32("Id");
+                // Mapping from PostCreationViewModel to PostDto
+                var postDto = _mapper.Map<Domain.Dtos.PostDto>(model);
+                postDto.PublisherId = (int)HttpContext.Session.GetInt32("Id");
 
-                // Call your service or repository method to save the news
-                _newsService.Create(newsDto);
+                // Call your service or repository method to save the post
+                _services.postService.Create(postDto);
 
-                // Redirect to the desired page, e.g., the list of news
-                return RedirectToAction("Index", "News");
+                // Redirect to the desired page, e.g., the list of post
+                return RedirectToAction("Post", "Admin");
             }
 
             model.Categories = GetCategorySelectList();
             model.Languages = GetLanguageSelectList();
 
             // If the model state is not valid, return the view with validation errors
-            return View("News/Create", model);
+            return View("Post/Create", model);
         }
 
-
-        [Route("Admin/News/{id:int}")]
-        public IActionResult NewsDetails(int id)
+        [Route("Admin/Post/{id:int}")]
+        public IActionResult PostDetails(int id)
         {
-            var newsDto = _newsService.Select(id);
-            if (newsDto == null)
+            var postDto = _services.postService.Select(id);
+            if (postDto == null)
             {
                 return RedirectToAction("NotFound", "Home");
             }
 
-            return View("News/Details", _mapper.Map<Models.NewsViewModel>(newsDto));
+            return View("Post/Details", _mapper.Map<Models.Post.PostViewModel>(postDto));
         }
 
-        [Route("Admin/News/Edit")]
-        public IActionResult NewsEdit()
+        [Route("Admin/Post/Edit")]
+        public IActionResult PostEdit()
         {
-            return View("News/Edit");
+            return View("Post/Edit");
         }
 
-        [Route("Admin/News/Delete")]
-        public IActionResult NewsDelete()
+        [Route("Admin/Post/Delete")]
+        public IActionResult PostDelete()
         {
-            return View("News/Delete");
+            return View("Post/Delete");
         }
 
         private bool IsAuthorized()
