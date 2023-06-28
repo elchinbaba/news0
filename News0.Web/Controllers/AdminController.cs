@@ -111,7 +111,7 @@ namespace News0.Web.Controllers
         {
             // Retrieve categories from the database or any other source
             // and return them as a SelectList
-            var categories = Data.CategoryList.All;
+            var categories = _services.categoryService.Select();
             return new SelectList(categories, "Id", "Name");
         }
 

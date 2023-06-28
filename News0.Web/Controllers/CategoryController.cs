@@ -10,6 +10,13 @@ namespace News0.Web.Controllers
 {
     public class CategoryController : Controller
     {
+        private readonly Services _services;
+
+        public CategoryController(Services services)
+        {
+            _services = services;
+        }
+
         public IActionResult Index()
         {
             return View();
@@ -18,12 +25,16 @@ namespace News0.Web.Controllers
         [HttpPost]
         public IActionResult Create(Models.CategoryViewModel category)
         {
-            NewsContext newsContext = new NewsContext();
-            CategoryService categoryService = new CategoryService(newsContext);
-            categoryService.Create(new Domain.Entities.Category()
+            _services.categoryService.Create(new Domain.Entities.Category()
             {
                 Name = category.Name
             });
+            //NewsContext newsContext = new NewsContext();
+            //CategoryService categoryService = new CategoryService(newsContext);
+            //categoryService.Create(new Domain.Entities.Category()
+            //{
+            //    Title = category.Title
+            //});
             return View();
         }
     }

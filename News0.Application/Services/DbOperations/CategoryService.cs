@@ -1,16 +1,32 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using News0.Domain.Repositories;
+using AutoMapper;
+using System.Linq;
 
 namespace News0.Application.Services.DbOperations
 {
-    public class CategoryService : CategoryRepositoryDomain
+    public class CategoryService : Domain.Repositories.CategoryRepositoryDomain
     {
         private readonly NewsContextApplication _context;
-        public CategoryService(NewsContextApplication context)
+        private readonly IMapper _mapper;
+        public CategoryService(NewsContextApplication context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
+        }
+        public List<Domain.Dtos.CategoryDto> Select()
+        {
+            var categories = _context.Categories.ToList();
+
+            return _mapper.Map<List<Domain.Dtos.CategoryDto>>(categories);
+        }
+
+        public Domain.Dtos.CategoryDto Select(int id)
+        {
+            var category = _context.Categories.Find(id);
+
+            return _mapper.Map<Domain.Dtos.CategoryDto>(category);
         }
         public void Create(Domain.Entities.Category category)
         {
