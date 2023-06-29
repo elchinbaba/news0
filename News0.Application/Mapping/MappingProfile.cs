@@ -20,6 +20,9 @@ namespace News0.Application.Mapping
 
             CreateMap<Domain.Entities.Category, Domain.Dtos.CategoryDto>();
             CreateMap<Domain.Dtos.CategoryDto, Domain.Entities.Category>();
+
+            CreateMap<Domain.Entities.Language, Domain.Dtos.LanguageDto>();
+            CreateMap<Domain.Dtos.LanguageDto, Domain.Entities.Language>();
         }
     }
 }

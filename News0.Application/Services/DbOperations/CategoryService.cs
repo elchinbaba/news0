@@ -10,11 +10,13 @@ namespace News0.Application.Services.DbOperations
     {
         private readonly NewsContextApplication _context;
         private readonly IMapper _mapper;
+
         public CategoryService(NewsContextApplication context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
         }
+
         public List<Domain.Dtos.CategoryDto> Select()
         {
             var categories = _context.Categories.ToList();

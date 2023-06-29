@@ -58,6 +58,7 @@ namespace News0.Web.Controllers
                 // Mapping from PostCreationViewModel to PostDto
                 var postDto = _mapper.Map<Domain.Dtos.PostDto>(model);
                 postDto.PublisherId = (int)HttpContext.Session.GetInt32("Id");
+                postDto.PublishDate = DateTime.Now;
 
                 // Call your service or repository method to save the post
                 _services.postService.Create(postDto);
@@ -119,7 +120,7 @@ namespace News0.Web.Controllers
         {
             // Retrieve languages from the database or any other source
             // and return them as a SelectList
-            var languages = Data.LanguageList.All;
+            var languages = _services.languageService.Select();
             return new SelectList(languages, "Id", "Name");
         }
     }
