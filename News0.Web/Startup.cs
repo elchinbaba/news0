@@ -30,7 +30,10 @@ namespace News0.Web
             //services.AddAutoMapper(typeof(Application.Mapping.MappingProfile), typeof(Data.Mapping.MappingProfile));
 
             //services.AddAutoMapper(typeof(Startup));
-
+            //services.AddDbContext<Application.NewsContextApplication>(options =>
+            //    options.UseSqlServer(@"workstation id=NewsWebsite0.mssql.somee.com;packet size=4096;user id=elchinbaba_SQLLogin_1;pwd=uwkpj5r4ej;data source=NewsWebsite0.mssql.somee.com;persist security info=False;initial catalog=NewsWebsite0"));
+            //services.AddDbContext<Application.NewsContextApplication>(options =>
+            //    options.UseSqlServer(@"Server=sql.bsite.net\MSSQL2016;Database=news0_;User Id=news0_;password=root"));
             services.AddDbContext<Application.NewsContextApplication>(options =>
                 options.UseSqlServer(@"Server=WIN-D6GRQOTSRKP\SQLEXPRESS;Database=News0;Trusted_Connection=True"));
 
