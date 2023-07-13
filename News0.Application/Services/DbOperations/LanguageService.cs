@@ -29,9 +29,14 @@ namespace News0.Application.Services.DbOperations
 
             return _mapper.Map<Domain.Dtos.LanguageDto>(language);
         }
-        public void Create(Domain.Entities.Language language)
-        {
 
+        public void Create(Domain.Dtos.LanguageDto languageDto)
+        {
+            var language = _mapper.Map<Domain.Entities.Language>(languageDto);
+
+            _context.Languages.Add(language);
+
+            _context.SaveChanges();
         }
         public void Update(Domain.Entities.Language language)
         {

@@ -15,6 +15,9 @@ namespace News0.Web.Data.Mapping
                 .ForMember(dest => dest.Category, opt => opt.Ignore())
                 .ForMember(dest => dest.Title, opt => opt.MapFrom(src => src.Title))
                 .ForMember(dest => dest.Content, opt => opt.MapFrom(src => src.Content));
+
+            CreateMap<Domain.Dtos.LanguageDto, Models.LanguageViewModel>();
+            CreateMap<Models.LanguageViewModel, Domain.Dtos.LanguageDto>();
         }
     }
 }

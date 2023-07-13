@@ -98,6 +98,41 @@ namespace News0.Web.Controllers
             return View("Post/Delete");
         }
 
+        public IActionResult Language()
+        {
+            var languageDtos = _services.languageService.Select();
+
+            return View("Language/Index", _mapper.Map<List<Models.LanguageViewModel>>(languageDtos));
+        }
+
+        [Route("Admin/Language/Create")]
+        public IActionResult LanguageCreate()
+        {
+            var model = new Models.LanguageViewModel();
+
+            return View("Language/Create", model);
+        }
+
+        [Route("Admin/Language/Create")]
+        [HttpPost]
+        public IActionResult LanguageCreate(Models.LanguageViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                // Mapping from LanguageViewModel to LanguageDto
+                var languageDto = _mapper.Map<Domain.Dtos.LanguageDto>(model);
+
+                // Call your service or repository method to save the language
+                _services.languageService.Create(languageDto);
+
+                // Redirect to the desired page, e.g., the list of language
+                return RedirectToAction("Language", "Admin");
+            }
+
+            // If the model state is not valid, return the view with validation errors
+            return View("Language/Create", model);
+        }
+
         private bool IsAuthorized()
         {
             if (HttpContext.Session.GetInt32("Id") == null)

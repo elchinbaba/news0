@@ -1,0 +1,48 @@
+﻿@model List<LanguageViewModel>
+
+@{
+    ViewData["Title"] = "Manage Languages";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Manage Languages</h1>
+<hr />
+
+<!-- Display existing languages -->
+<h3>Existing Languages</h3>
+@if (Model.Count > 0)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Language</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var language in Model)
+            {
+                <tr>
+                    <td>@language.Name</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No languages found.</p>
+}
+
+<hr />
+
+<!-- Add new language form -->
+<h3>Add New Language</h3>
+<a class="btn btn-primary" href="/Admin/Language/Create">Add Language</a>
+@*<h3>Add New Language</h3>
+    <form method="post" action="/Admin/Language/Add">
+        <div class="form-group">
+            <label for="languageName">Language Name</label>
+            <input type="text" class="form-control" id="languageName" name="LanguageName" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Add Language</button>
+    </form>*@
