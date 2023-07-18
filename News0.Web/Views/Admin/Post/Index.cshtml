@@ -9,9 +9,12 @@
 <div class="container mt-4">
     <div class="row">
         <div class="col-md-8">
-            <a asp-action="PostCreate" class="btn btn-primary mt-3 list-group-item list-group-item-action">ADD NEWS</a>
+            <h3>Add News</h3>
+            <a asp-action="PostCreate" class="btn btn-primary">ADD</a>
+            @*<a asp-action="PostCreate" class="btn btn-primary mt-3 list-group-item list-group-item-action">ADD NEWS</a>*@
 
             <!-- News Articles -->
+            <h3>Existing News</h3>
             @{
                 foreach (News0.Web.Models.Post.PostViewModel post in Model)
                 {

@@ -18,6 +18,11 @@ namespace News0.Web.Data.Mapping
 
             CreateMap<Domain.Dtos.LanguageDto, Models.LanguageViewModel>();
             CreateMap<Models.LanguageViewModel, Domain.Dtos.LanguageDto>();
+
+            CreateMap<Domain.Dtos.CategoryDto, Models.CategoryViewModel>();
+            CreateMap<Models.CategoryViewModel, Domain.Dtos.CategoryDto>();
+
+            CreateMap<Models.CategoryCreationViewModel, Domain.Dtos.CategoryDto>();
         }
     }
 }

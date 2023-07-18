@@ -30,9 +30,12 @@ namespace News0.Application.Services.DbOperations
 
             return _mapper.Map<Domain.Dtos.CategoryDto>(category);
         }
-        public void Create(Domain.Entities.Category category)
+        public void Create(Domain.Dtos.CategoryDto categoryDto)
         {
+            var category = _mapper.Map<Domain.Entities.Category>(categoryDto);
+
             _context.Categories.Add(category);
+
             _context.SaveChanges();
         }
 

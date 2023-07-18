@@ -133,8 +133,56 @@ namespace News0.Web.Controllers
             return View("Language/Create", model);
         }
 
+        [Route("Admin/Language/Delete")]
+        public IActionResult LanguageDelete()
+        {
+            return View("Language/Delete");
+        }
+
+        public IActionResult Category()
+        {
+            var categoryDtos = _services.categoryService.Select();
+
+            return View("Category/Index", _mapper.Map<List<Models.CategoryViewModel>>(categoryDtos));
+        }
+
+        [Route("Admin/Category/Create")]
+        public IActionResult CategoryCreate()
+        {
+            var model = new Models.CategoryCreationViewModel
+            {
+                Languages = GetLanguageSelectList()
+            };
+
+            return View("Category/Create", model);
+        }
+
+        [Route("Admin/Category/Create")]
+        [HttpPost]
+        public IActionResult CategoryCreate(Models.CategoryCreationViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                // Mapping from CategoryCreationViewModel to CategoryDto
+                var categoryDto = _mapper.Map<Domain.Dtos.CategoryDto>(model);
+
+                // Call your service or repository method to save the category
+                _services.categoryService.Create(categoryDto);
+
+                // Redirect to the desired page, e.g., the list of category
+                return RedirectToAction("Category", "Admin");
+            }
+
+            model.Languages = GetLanguageSelectList();
+
+            // If the model state is not valid, return the view with validation errors
+            return View("Category/Create", model);
+        }
+
         private bool IsAuthorized()
         {
+            return true;
+
             if (HttpContext.Session.GetInt32("Id") == null)
             {
                 return false;

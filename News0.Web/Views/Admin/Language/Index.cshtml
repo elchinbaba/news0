@@ -21,9 +21,12 @@
         <tbody>
             @foreach (var language in Model)
             {
-                <tr>
-                    <td>@language.Name</td>
-                </tr>
+            <tr>
+                <td>
+                    @language.Name
+                    <a asp-action="LanguageDelete" class="btn btn-danger float-right">Delete</a>
+                </td>
+            </tr>
             }
         </tbody>
     </table>

@@ -8,7 +8,7 @@ namespace News0.Domain.Repositories
     {
         public List<Dtos.CategoryDto> Select();
         public Dtos.CategoryDto Select(int id);
-        public void Create(Entities.Category category);
+        public void Create(Dtos.CategoryDto categoryDto);
         public void Update(Entities.Category category);
         public void Delete(Entities.Category category);
     }

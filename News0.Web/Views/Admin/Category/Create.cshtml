@@ -1,0 +1,23 @@
+﻿@model CategoryCreationViewModel
+
+@{
+    ViewData["Title"] = "Add Category";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Add Category</h1>
+<hr />
+
+<!-- Add new category form -->
+<form method="post">
+    <div class="form-group">
+        <label for="name">Category Name</label>
+        <input type="text" class="form-control" id="name" name="Name" required>
+    </div>
+    @foreach (var lang in Model.Languages)
+    {
+        <label for="@lang.Text">@lang.Text translation</label>
+        <input type="text" class="form-control" id="@lang.Text" name="@lang.Text" required>
+    }
+    <button type="submit" class="btn btn-primary">Add Category</button>
+</form>
