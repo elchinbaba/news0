@@ -1,4 +1,4 @@
-﻿@model CategoryCreationViewModel
+﻿@model CategoryViewModel
 
 @{
     ViewData["Title"] = "Add Category";
@@ -14,10 +14,15 @@
         <label for="name">Category Name</label>
         <input type="text" class="form-control" id="name" name="Name" required>
     </div>
-    @foreach (var lang in Model.Languages)
+    @*@for (int i = 0; i < Model.Languages.ToList().Count; i++)
+    {
+        <label for="@Model.Languages.ToList()[i].Text">@Model.Languages.ToList()[i].Text translation</label>
+        <input type="text" class="form-control" id="@Model.Languages.ToList()[i].Text" name="@Model.Languages.ToList()[i].Text" required>
+    }*@
+    @*@foreach (var lang in Model.Languages)
     {
         <label for="@lang.Text">@lang.Text translation</label>
         <input type="text" class="form-control" id="@lang.Text" name="@lang.Text" required>
-    }
+    }*@
     <button type="submit" class="btn btn-primary">Add Category</button>
 </form>

@@ -9,7 +9,7 @@ namespace News0.Domain.Entities
     public class CategoryTranslation
     {
         public int Id { get; set; }
-        public string Name { get; set; }
+        public string Title { get; set; }
         public string Status { get; set; }
         public DateTime PublishDate { get; set; }
         public DateTime InsertDate { get; set; }

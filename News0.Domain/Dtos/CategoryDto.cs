@@ -8,5 +8,8 @@ namespace News0.Domain.Dtos
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public string Language { get; set; }
+
+        //public ICollection<CategoryTranslationDto> CategoryTranslationDtos { get; set; }
     }
 }

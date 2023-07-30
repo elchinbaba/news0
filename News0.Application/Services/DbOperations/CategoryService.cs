@@ -32,9 +32,27 @@ namespace News0.Application.Services.DbOperations
         }
         public void Create(Domain.Dtos.CategoryDto categoryDto)
         {
+            //var categoryEntity = _mapper.Map<Domain.Entities.Category>(categoryDto);
+            //var category = _context.Categories.Add(categoryEntity);
+            //_context.SaveChanges();
+
+            //var categoryTranslation = _mapper.Map<Domain.Entities.CategoryTranslation>(categoryDto);
+
+            //_context.CategoryTranslations.Add(categoryTranslation);
+            //_context.SaveChanges();
+
             var category = _mapper.Map<Domain.Entities.Category>(categoryDto);
 
             _context.Categories.Add(category);
+
+            _context.SaveChanges();
+        }
+
+        public void CreateTranslation(Domain.Dtos.CategoryTranslationDto categoryTranslationDto)
+        {
+            var categoryTranslation = _mapper.Map<Domain.Entities.CategoryTranslation>(categoryTranslationDto);
+
+            _context.CategoryTranslations.Add(categoryTranslation);
 
             _context.SaveChanges();
         }

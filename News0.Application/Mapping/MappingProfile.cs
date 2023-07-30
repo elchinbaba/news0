@@ -23,6 +23,9 @@ namespace News0.Application.Mapping
 
             CreateMap<Domain.Entities.Language, Domain.Dtos.LanguageDto>();
             CreateMap<Domain.Dtos.LanguageDto, Domain.Entities.Language>();
+
+            CreateMap<Domain.Entities.CategoryTranslation, Domain.Dtos.CategoryTranslationDto>();
+            CreateMap<Domain.Dtos.CategoryTranslationDto, Domain.Entities.CategoryTranslation>();
         }
     }
 }

@@ -11,5 +11,6 @@ namespace News0.Web.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public IEnumerable<SelectListItem> Languages { get; set; }
+        public List<string> LanguagesNames { get; set; }
     }
 }

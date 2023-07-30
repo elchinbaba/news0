@@ -74,6 +74,38 @@ namespace News0.Web.Controllers
             return View("Post/Create", model);
         }
 
+        [Route("Admin/Post/Translation/Create")]
+        public IActionResult PostTranslationCreate()
+        {
+            var model = new Models.CategoryTranslationViewModel
+            {
+                Categories = GetCategorySelectList(),
+                Languages = GetLanguageSelectList()
+            };
+
+            return View("Category/Translation/Create", model);
+        }
+
+        [Route("Admin/Post/Translation/Create")]
+        [HttpPost]
+        public IActionResult PostTranslationCreate(Models.CategoryTranslationViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                // Mapping from CategoryTranslationViewModel to CategoryTranslationDto
+                var categoryTranslationDto = _mapper.Map<Domain.Dtos.CategoryTranslationDto>(model);
+
+                // Call your service or repository method to save the category
+                _services.categoryService.CreateTranslation(categoryTranslationDto);
+
+                // Redirect to the desired page, e.g., the list of category
+                return RedirectToAction("Category", "Admin");
+            }
+
+            // If the model state is not valid, return the view with validation errors
+            return View("Category/Translation/Create", model);
+        }
+
         [Route("Admin/Post/{id:int}")]
         public IActionResult PostDetails(int id)
         {
@@ -149,18 +181,22 @@ namespace News0.Web.Controllers
         [Route("Admin/Category/Create")]
         public IActionResult CategoryCreate()
         {
-            var model = new Models.CategoryCreationViewModel
-            {
-                Languages = GetLanguageSelectList()
-            };
+            //var model = new Models.CategoryViewModel
+            //{
+            //    Languages = GetLanguageSelectList(),
+            //    //LanguagesNames = GetLanguageSelectList().Select(l => l.Text.ToString()).ToList()
+            //};
 
-            return View("Category/Create", model);
+            return View("Category/Create");
         }
 
         [Route("Admin/Category/Create")]
         [HttpPost]
-        public IActionResult CategoryCreate(Models.CategoryCreationViewModel model)
+        public IActionResult CategoryCreate(Models.CategoryViewModel model)
         {
+            //model.Languages = GetLanguageSelectList();
+            //model.LanguagesNames = model.Languages.Select(l => l.Text.ToString()).ToList();
+
             if (ModelState.IsValid)
             {
                 // Mapping from CategoryCreationViewModel to CategoryDto
@@ -173,10 +209,40 @@ namespace News0.Web.Controllers
                 return RedirectToAction("Category", "Admin");
             }
 
-            model.Languages = GetLanguageSelectList();
-
             // If the model state is not valid, return the view with validation errors
             return View("Category/Create", model);
+        }
+
+        [Route("Admin/Category/Translation/Create")]
+        public IActionResult CategoryTranslationCreate()
+        {
+            var model = new Models.CategoryTranslationViewModel
+            {
+                Categories = GetCategorySelectList(),
+                Languages = GetLanguageSelectList()
+            };
+
+            return View("Category/Translation/Create", model);
+        }
+
+        [Route("Admin/Category/Translation/Create")]
+        [HttpPost]
+        public IActionResult CategoryTranslationCreate(Models.CategoryTranslationViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                // Mapping from CategoryTranslationViewModel to CategoryTranslationDto
+                var categoryTranslationDto = _mapper.Map<Domain.Dtos.CategoryTranslationDto>(model);
+
+                // Call your service or repository method to save the category
+                _services.categoryService.CreateTranslation(categoryTranslationDto);
+
+                // Redirect to the desired page, e.g., the list of category
+                return RedirectToAction("Category", "Admin");
+            }
+
+            // If the model state is not valid, return the view with validation errors
+            return View("Category/Translation/Create", model);
         }
 
         private bool IsAuthorized()

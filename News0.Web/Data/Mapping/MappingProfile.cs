@@ -22,7 +22,11 @@ namespace News0.Web.Data.Mapping
             CreateMap<Domain.Dtos.CategoryDto, Models.CategoryViewModel>();
             CreateMap<Models.CategoryViewModel, Domain.Dtos.CategoryDto>();
 
-            CreateMap<Models.CategoryCreationViewModel, Domain.Dtos.CategoryDto>();
+            //CreateMap<Models.CategoryCreationViewModel, Domain.Dtos.CategoryDto>()
+            //    .ForMember(dest => dest.CategoryTranslationDtos, opt => opt.MapFrom(src => src.Languages.ToList().Select((x, i) => new { item = x, index = i}).ToList().Select(l => new Domain.Dtos.CategoryTranslationDto() { Language = l.item.Text, Name = src.LanguagesNames[l.index] })));
+
+            CreateMap<Domain.Dtos.CategoryTranslationDto, Models.CategoryTranslationViewModel>();
+            CreateMap<Models.CategoryTranslationViewModel, Domain.Dtos.CategoryTranslationDto>();
         }
     }
 }
