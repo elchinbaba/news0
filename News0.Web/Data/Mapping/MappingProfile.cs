@@ -27,6 +27,12 @@ namespace News0.Web.Data.Mapping
 
             CreateMap<Domain.Dtos.CategoryTranslationDto, Models.CategoryTranslationViewModel>();
             CreateMap<Models.CategoryTranslationViewModel, Domain.Dtos.CategoryTranslationDto>();
+
+            CreateMap<Domain.Dtos.PostTranslationDto, Models.Post.PostTranslationCreationViewModel>();
+            CreateMap<Models.Post.PostTranslationCreationViewModel, Domain.Dtos.PostTranslationDto>();
+
+            CreateMap<Domain.Dtos.PostDto, Models.Post.PostEditionViewModel>();
+            CreateMap<Models.Post.PostEditionViewModel, Domain.Dtos.PostDto>();
         }
     }
 }

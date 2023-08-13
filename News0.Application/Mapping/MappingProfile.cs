@@ -26,6 +26,14 @@ namespace News0.Application.Mapping
 
             CreateMap<Domain.Entities.CategoryTranslation, Domain.Dtos.CategoryTranslationDto>();
             CreateMap<Domain.Dtos.CategoryTranslationDto, Domain.Entities.CategoryTranslation>();
+
+            CreateMap<Domain.Entities.PostTranslation, Domain.Dtos.PostTranslationDto>();
+            CreateMap<Domain.Dtos.PostTranslationDto, Domain.Entities.PostTranslation>()
+                .ForMember(dest => dest.Id, opt => opt.Ignore());
+
+            CreateMap<Domain.Entities.Post, Domain.Dtos.PostDto>()
+                .ForMember(dest => dest.Category, opt => opt.MapFrom(src => src.Category.Name));
+            CreateMap<Domain.Dtos.PostDto, Domain.Entities.Post>();
         }
     }
 }

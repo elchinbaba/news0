@@ -1,5 +1,41 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model News0.Web.Models.Post.PostEditionViewModel
+
 @{
+    ViewData["Title"] = "Add News";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+@section styles {
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+}
+
+@section scripts {
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+}
+
+<div class="container">
+    <h1>Add News</h1>
+    <hr />
+    <h3>Add New Post Translation</h3>
+    <a asp-action="PostTranslationCreate" asp-route-id="@Model.Id" class="btn btn-primary">Add</a>
+    @*<a class="btn btn-primary" href="/Admin/Post/Edit/Create">ADD</a>*@
+    <form method="post">
+        <div class="form-group">
+            <label for="v">Category</label>
+            <select class="form-control" id="category" name="CategoryId" required>
+                <option value="@Model.CategoryId">@Model.Category</option>
+                @foreach (var category in Model.Categories.Where(cat => cat.Value != Model.CategoryId.ToString()))
+                {
+                    <option value="@category.Value">@category.Text</option>
+                }
+            </select>
+        </div>
+        @*<div class="form-group">
+                <label for="publishDate">Publish Date</label>
+                <input type="date" class="form-control" id="publishDate" name="PublishDate" required>
+            </div>*@
+        <button type="submit" class="btn btn-primary">Save</button>
+    </form>
+</div>

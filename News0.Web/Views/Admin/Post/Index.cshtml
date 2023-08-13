@@ -11,6 +11,9 @@
         <div class="col-md-8">
             <h3>Add News</h3>
             <a asp-action="PostCreate" class="btn btn-primary">ADD</a>
+            <h3>Add New Post Translation</h3>
+            <a class="btn btn-primary" href="/Admin/Post/Translation/Create">ADD</a>
+
             @*<a asp-action="PostCreate" class="btn btn-primary mt-3 list-group-item list-group-item-action">ADD NEWS</a>*@
 
             <!-- News Articles -->
@@ -25,7 +28,7 @@
                             <p class="card-text">@post.Content</p>
                             <a asp-action="PostDetails" asp-route-id="@post.Id" class="btn btn-primary">Read More</a>
                             <a asp-action="PostDelete" class="btn btn-danger float-right">Delete</a>
-                            <a asp-action="PostEdit" class="btn btn-info float-right">Edit</a>
+                            <a asp-action="PostEdit" asp-route-id="@post.Id" class="btn btn-info float-right">Edit</a>
                         </div>
                     </div>
                 }

@@ -67,43 +67,48 @@ namespace News0.Web.Controllers
                 return RedirectToAction("Post", "Admin");
             }
 
-            model.Categories = GetCategorySelectList();
-            model.Languages = GetLanguageSelectList();
+            //model.Categories = GetCategorySelectList();
+            //model.Languages = GetLanguageSelectList();
 
             // If the model state is not valid, return the view with validation errors
             return View("Post/Create", model);
         }
 
-        [Route("Admin/Post/Translation/Create")]
-        public IActionResult PostTranslationCreate()
+        [Route("Admin/Post/Edit/{id:int}/Translation/Create")]
+        public IActionResult PostTranslationCreate(int id)
         {
-            var model = new Models.CategoryTranslationViewModel
+            var model = new Models.Post.PostTranslationCreationViewModel
             {
-                Categories = GetCategorySelectList(),
-                Languages = GetLanguageSelectList()
+                Languages = GetLanguagesWithoutTranslationsForPost(id),
+                //Posts = GetPostSelectList(),
+                PostId = id
             };
 
-            return View("Category/Translation/Create", model);
+            return View("Post/Translation/Create", model);
         }
 
-        [Route("Admin/Post/Translation/Create")]
+        [Route("Admin/Post/Edit/{id:int}/Translation/Create")]
         [HttpPost]
-        public IActionResult PostTranslationCreate(Models.CategoryTranslationViewModel model)
+        public IActionResult PostTranslationCreate(Models.Post.PostTranslationCreationViewModel model)
         {
             if (ModelState.IsValid)
             {
-                // Mapping from CategoryTranslationViewModel to CategoryTranslationDto
-                var categoryTranslationDto = _mapper.Map<Domain.Dtos.CategoryTranslationDto>(model);
-
+                // Mapping from PostTranslationCreationViewModel to PostTranslationDto
+                var postTranslationDto = _mapper.Map<Domain.Dtos.PostTranslationDto>(model);
+                //postTranslationDto.PublisherId = (int)HttpContext.Session.GetInt32("Id");
+                postTranslationDto.Id = 0;
+                postTranslationDto.PostId = model.Id;
+                postTranslationDto.PublisherId = 2;
+                postTranslationDto.PublishDate = DateTime.Now;
                 // Call your service or repository method to save the category
-                _services.categoryService.CreateTranslation(categoryTranslationDto);
+                _services.postService.CreateTranslation(postTranslationDto);
 
                 // Redirect to the desired page, e.g., the list of category
-                return RedirectToAction("Category", "Admin");
+                return RedirectToAction("Post", "Admin");
             }
 
             // If the model state is not valid, return the view with validation errors
-            return View("Category/Translation/Create", model);
+            return View("Post/Translation/Create", model);
         }
 
         [Route("Admin/Post/{id:int}")]
@@ -118,10 +123,14 @@ namespace News0.Web.Controllers
             return View("Post/Details", _mapper.Map<Models.Post.PostViewModel>(postDto));
         }
 
-        [Route("Admin/Post/Edit")]
-        public IActionResult PostEdit()
+        [Route("Admin/Post/Edit/{id:int}")]
+        public IActionResult PostEdit(int id)
         {
-            return View("Post/Edit");
+            var model = _mapper.Map<Models.Post.PostEditionViewModel>(_services.postService.SelectPostByTranslation(id));
+
+            model.Categories = GetCategorySelectList();
+
+            return View("Post/Edit", model);
         }
 
         [Route("Admin/Post/Delete")]
@@ -257,6 +266,14 @@ namespace News0.Web.Controllers
             return true;
         }
 
+        //private IEnumerable<SelectListItem> GetPostSelectList()
+        //{
+        //    // Retrieve posts from the database or any other source
+        //    // and return them as a SelectList
+        //    var posts = _services.postService.SelectPosts();
+        //    return new SelectList(posts, "Id", "Id");
+        //}
+
         private IEnumerable<SelectListItem> GetCategorySelectList()
         {
             // Retrieve categories from the database or any other source
@@ -272,5 +289,26 @@ namespace News0.Web.Controllers
             var languages = _services.languageService.Select();
             return new SelectList(languages, "Id", "Name");
         }
+
+        private IEnumerable<SelectListItem> GetLanguagesWithoutTranslationsForPost(int postId)
+        {
+            // Get the languages that have translations for the specific post
+            var languagesWithTranslations = _services.postService.SelectPostTranslations()
+                .Where(pt => pt.PostId == postId)
+                .Select(pt => pt.LanguageId)
+                .ToList();
+
+            // Get all available languages
+            var allLanguages = _services.languageService.Select();
+
+            // Filter out the languages that already have translations
+            var languagesWithoutTranslations = allLanguages
+                .Where(lang => !languagesWithTranslations.Contains(lang.Id))
+                .ToList();
+
+            return new SelectList(languagesWithoutTranslations, "Id", "Name");
+            //return languagesWithoutTranslations;
+        }
+
     }
 }
