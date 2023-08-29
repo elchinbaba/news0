@@ -126,9 +126,31 @@ namespace News0.Web.Controllers
         [Route("Admin/Post/Edit/{id:int}")]
         public IActionResult PostEdit(int id)
         {
-            var model = _mapper.Map<Models.Post.PostEditionViewModel>(_services.postService.SelectPostByTranslation(id));
+            var postDto = _services.postService.SelectPostByTranslation(id);
+
+            var model = _mapper.Map<Models.Post.PostEditionViewModel>(postDto);
 
             model.Categories = GetCategorySelectList();
+
+            return View("Post/Edit", model);
+        }
+
+        [Route("Admin/Post/Edit/{id:int}")]
+        [HttpPost]
+        public IActionResult PostEdit(int id, Models.Post.PostEditionViewModel model)
+        {
+            //model.Categories = GetCategorySelectList();
+
+            if (ModelState.IsValid)
+            {
+                var postDto = _services.postService.SelectPostByTranslation(id);
+
+                postDto.CategoryId = model.CategoryId;
+                postDto.Category = _mapper.Map<Domain.Entities.Category>(_services.categoryService.Select(model.CategoryId));
+                _services.postService.Update(postDto);
+
+                return RedirectToAction("Post", "Admin");
+            }
 
             return View("Post/Edit", model);
         }

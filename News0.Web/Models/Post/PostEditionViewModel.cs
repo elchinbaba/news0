@@ -10,7 +10,7 @@ namespace News0.Web.Models.Post
     {
         public int Id { get; set; }
         public int CategoryId { get; set; }
-        public string Category { get; set; }
+        public Domain.Entities.Category Category { get; set; }
         public IEnumerable<SelectListItem> Categories { get; set; }
     }
 }

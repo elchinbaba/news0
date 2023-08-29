@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using AutoMapper;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace News0.Application.Services.DbOperations
 {
@@ -27,6 +28,8 @@ namespace News0.Application.Services.DbOperations
         public Domain.Dtos.CategoryDto Select(int id)
         {
             var category = _context.Categories.Find(id);
+
+            _context.Entry(category).State = EntityState.Detached;
 
             return _mapper.Map<Domain.Dtos.CategoryDto>(category);
         }

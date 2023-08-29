@@ -25,7 +25,7 @@
         <div class="form-group">
             <label for="v">Category</label>
             <select class="form-control" id="category" name="CategoryId" required>
-                <option value="@Model.CategoryId">@Model.Category</option>
+                <option value="@Model.CategoryId">@Model.Category.Name</option>
                 @foreach (var category in Model.Categories.Where(cat => cat.Value != Model.CategoryId.ToString()))
                 {
                     <option value="@category.Value">@category.Text</option>

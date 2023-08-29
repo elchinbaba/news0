@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 
 namespace News0.Application.Services.DbOperations
 {
@@ -40,8 +41,11 @@ namespace News0.Application.Services.DbOperations
                 );
 
             post.Category = _context.Categories.Find(post.CategoryId);
+            var postDto = _mapper.Map<Domain.Dtos.PostDto>(post);
 
-            return _mapper.Map<Domain.Dtos.PostDto>(post);
+            _context.Entry(post).State = EntityState.Detached;
+
+            return postDto;
         }
 
         public List<Domain.Dtos.PostDto> SelectPosts()
@@ -80,9 +84,13 @@ namespace News0.Application.Services.DbOperations
             _context.SaveChanges();
         }
 
-        public void Update(Domain.Entities.PostTranslation postTranslation)
+        public void Update(Domain.Dtos.PostDto postDto)
         {
-            _context.PostTranslations.Update(postTranslation);
+            var post = _mapper.Map<Domain.Entities.Post>(postDto);
+
+            //_context.Entry(post).State = EntityState.Detached;
+
+            _context.Posts.Update(post);
             _context.SaveChanges();
         }
 
