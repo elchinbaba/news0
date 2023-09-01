@@ -10,6 +10,6 @@ namespace News0.Domain.Repositories
         public Dtos.PostDto Select(int id);
         public void Create(Dtos.PostDto postDto);
         public void Update(Dtos.PostDto postDto);
-        public void Delete(Entities.PostTranslation postTranslation);
+        public void Delete(Dtos.PostTranslationDto postTranslationDto);
     }
 }

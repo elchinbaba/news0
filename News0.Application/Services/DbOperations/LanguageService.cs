@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using AutoMapper;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace News0.Application.Services.DbOperations
 {
@@ -27,6 +28,8 @@ namespace News0.Application.Services.DbOperations
         {
             var language = _context.Languages.Find(id);
 
+            _context.Entry(language).State = EntityState.Detached;
+
             return _mapper.Map<Domain.Dtos.LanguageDto>(language);
         }
 
@@ -42,9 +45,13 @@ namespace News0.Application.Services.DbOperations
         {
 
         }
-        public void Delete(Domain.Entities.Language language)
+        public void Delete(Domain.Dtos.LanguageDto languageDto)
         {
+            var language = _mapper.Map<Domain.Entities.Language>(languageDto);
+            language.Id = languageDto.Id;
 
+            _context.Languages.Remove(language);
+            _context.SaveChanges();
         }
     }
 }

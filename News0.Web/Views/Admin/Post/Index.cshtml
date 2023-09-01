@@ -11,24 +11,24 @@
         <div class="col-md-8">
             <h3>Add News</h3>
             <a asp-action="PostCreate" class="btn btn-primary">ADD</a>
-            <h3>Add New Post Translation</h3>
-            <a class="btn btn-primary" href="/Admin/Post/Translation/Create">ADD</a>
+            @*<h3>Add New Post Translation</h3>
+            <a class="btn btn-primary" href="/Admin/Post/Translation/Create">ADD</a>*@
 
             @*<a asp-action="PostCreate" class="btn btn-primary mt-3 list-group-item list-group-item-action">ADD NEWS</a>*@
 
             <!-- News Articles -->
             <h3>Existing News</h3>
             @{
-                foreach (News0.Web.Models.Post.PostViewModel post in Model)
+                foreach (News0.Web.Models.Post.PostViewModel postTranslation in Model)
                 {
                     <div class="card mb-4">
                         <img src="https://via.placeholder.com/400x200" class="card-img-top" alt="News Image">
                         <div class="card-body">
-                            <h5 class="card-title">@post.Title<span class="float-right">@post.Language</span></h5>
-                            <p class="card-text">@post.Content</p>
-                            <a asp-action="PostDetails" asp-route-id="@post.Id" class="btn btn-primary">Read More</a>
-                            <a asp-action="PostDelete" class="btn btn-danger float-right">Delete</a>
-                            <a asp-action="PostEdit" asp-route-id="@post.Id" class="btn btn-info float-right">Edit</a>
+                            <h5 class="card-title">@postTranslation.Title<span class="float-right">@postTranslation.Language</span></h5>
+                            <p class="card-text">@postTranslation.Content</p>
+                            <a asp-action="PostDetails" asp-route-id="@postTranslation.Id" class="btn btn-primary">Read More</a>
+                            <a asp-action="PostDelete" asp-route-id="@postTranslation.Id" class="btn btn-danger float-right">Delete</a>
+                            <a asp-action="PostEdit" asp-route-id="@postTranslation.Id" class="btn btn-info float-right">Edit</a>
                         </div>
                     </div>
                 }

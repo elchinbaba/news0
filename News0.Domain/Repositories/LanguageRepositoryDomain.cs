@@ -8,8 +8,8 @@ namespace News0.Domain.Repositories
     {
         public List<Dtos.LanguageDto> Select();
         public Dtos.LanguageDto Select(int id);
-        public void Create(Dtos.LanguageDto language);
+        public void Create(Dtos.LanguageDto languageDto);
         public void Update(Entities.Language language);
-        public void Delete(Entities.Language language);
+        public void Delete(Dtos.LanguageDto languageDto);
     }
 }

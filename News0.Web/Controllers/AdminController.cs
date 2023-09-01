@@ -57,7 +57,8 @@ namespace News0.Web.Controllers
             {
                 // Mapping from PostCreationViewModel to PostDto
                 var postDto = _mapper.Map<Domain.Dtos.PostDto>(model);
-                postDto.PublisherId = (int)HttpContext.Session.GetInt32("Id");
+                //postDto.PublisherId = (int)HttpContext.Session.GetInt32("Id");
+                postDto.PublisherId = 2;
                 postDto.PublishDate = DateTime.Now;
 
                 // Call your service or repository method to save the post
@@ -171,9 +172,10 @@ namespace News0.Web.Controllers
         }
 
         [Route("Admin/Post/Delete")]
-        public IActionResult PostDelete()
+        public IActionResult PostDelete(int id)
         {
-            return View("Post/Delete");
+            _services.postService.Delete(_services.postService.SelectTranslation(id));
+            return RedirectToAction("Post", "Admin");
         }
 
         public IActionResult Language()
@@ -212,9 +214,10 @@ namespace News0.Web.Controllers
         }
 
         [Route("Admin/Language/Delete")]
-        public IActionResult LanguageDelete()
+        public IActionResult LanguageDelete(int id)
         {
-            return View("Language/Delete");
+            _services.languageService.Delete(_services.languageService.Select(id));
+            return RedirectToAction("Language", "Admin");
         }
 
         public IActionResult Category()
@@ -289,6 +292,12 @@ namespace News0.Web.Controllers
 
             // If the model state is not valid, return the view with validation errors
             return View("Category/Translation/Create", model);
+        }
+
+        public IActionResult CategoryDelete(int id)
+        {
+            _services.categoryService.Delete(_services.categoryService.Select(id));
+            return RedirectToAction("Category", "Admin");
         }
 
         private bool IsAuthorized()

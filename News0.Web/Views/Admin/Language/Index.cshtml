@@ -24,7 +24,7 @@
             <tr>
                 <td>
                     @language.Name
-                    <a asp-action="LanguageDelete" class="btn btn-danger float-right">Delete</a>
+                    <a asp-action="LanguageDelete" asp-route-id="@language.Id" class="btn btn-danger float-right">Delete</a>
                 </td>
             </tr>
             }

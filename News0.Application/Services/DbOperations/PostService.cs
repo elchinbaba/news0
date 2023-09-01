@@ -113,8 +113,11 @@ namespace News0.Application.Services.DbOperations
             _context.SaveChanges();
         }
 
-        public void Delete(Domain.Entities.PostTranslation postTranslation)
+        public void Delete(Domain.Dtos.PostTranslationDto postTranslationDto)
         {
+            var postTranslation = _mapper.Map<Domain.Entities.PostTranslation>(postTranslationDto);
+            postTranslation.Id = postTranslationDto.Id;
+
             _context.PostTranslations.Remove(postTranslation);
             _context.SaveChanges();
         }
