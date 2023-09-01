@@ -62,6 +62,15 @@ namespace News0.Application.Services.DbOperations
             return _mapper.Map<Domain.Dtos.PostDto>(postTranslation);
         }
 
+        public Domain.Dtos.PostTranslationDto SelectTranslation(int id)
+        {
+            var postTranslation = _context.PostTranslations.Find(id);
+
+            _context.Entry(postTranslation).State = EntityState.Detached;
+
+            return _mapper.Map<Domain.Dtos.PostTranslationDto>(postTranslation);
+        }
+        
         public void Create(Domain.Dtos.PostDto postDto)
         {
             var postEntity = _mapper.Map<Domain.Entities.Post>(postDto);
@@ -91,6 +100,16 @@ namespace News0.Application.Services.DbOperations
             //_context.Entry(post).State = EntityState.Detached;
 
             _context.Posts.Update(post);
+            _context.SaveChanges();
+        }
+
+        public void UpdateTranslation(Domain.Dtos.PostTranslationDto postTranslationDto)
+        {
+            var postTranslation = _mapper.Map<Domain.Entities.PostTranslation>(postTranslationDto);
+            postTranslation.Id = postTranslationDto.Id;
+            //_context.Entry(post).State = EntityState.Detached;
+
+            _context.PostTranslations.Update(postTranslation);
             _context.SaveChanges();
         }
 

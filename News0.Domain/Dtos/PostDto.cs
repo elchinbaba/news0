@@ -10,7 +10,7 @@ namespace News0.Domain.Dtos
         public string Title { get; set; }
         public string Content { get; set; }
         public Entities.Category Category { get; set; }
-        public string Language { get; set; }
+        public Entities.Language Language { get; set; }
         public DateTime PublishDate { get; set; }
         public int PublisherId { get; set; }
         public int CategoryId { get; set; }

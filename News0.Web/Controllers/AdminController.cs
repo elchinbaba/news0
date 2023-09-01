@@ -129,6 +129,10 @@ namespace News0.Web.Controllers
             var postDto = _services.postService.SelectPostByTranslation(id);
 
             var model = _mapper.Map<Models.Post.PostEditionViewModel>(postDto);
+            var postTranslationDto = _services.postService.SelectTranslation(id);
+
+            model.Title = postTranslationDto.Title;
+            model.Content = postTranslationDto.Content;
 
             model.Categories = GetCategorySelectList();
 
@@ -147,6 +151,17 @@ namespace News0.Web.Controllers
 
                 postDto.CategoryId = model.CategoryId;
                 postDto.Category = _mapper.Map<Domain.Entities.Category>(_services.categoryService.Select(model.CategoryId));
+                
+                var postTranslationDto = _services.postService.SelectTranslation(id);
+
+                model.Language = postTranslationDto.Language;
+                model.LanguageId = postTranslationDto.LanguageId;
+
+                model.PostId = postDto.Id;
+                model.Id = postTranslationDto.Id;
+                model.PublisherId = 2;
+
+                _services.postService.UpdateTranslation(_mapper.Map<Domain.Dtos.PostTranslationDto>(model));
                 _services.postService.Update(postDto);
 
                 return RedirectToAction("Post", "Admin");
