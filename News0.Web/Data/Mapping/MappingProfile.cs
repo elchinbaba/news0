@@ -35,6 +35,8 @@ namespace News0.Web.Data.Mapping
             CreateMap<Models.Post.PostEditionViewModel, Domain.Dtos.PostDto>();
 
             CreateMap<Models.Post.PostEditionViewModel, Domain.Dtos.PostTranslationDto>();
+
+            CreateMap<Domain.Dtos.UserDto, Models.UserViewModel>();
         }
     }
 }

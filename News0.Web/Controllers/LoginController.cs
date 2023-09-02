@@ -6,16 +6,19 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Extensions;
 using News0.Application.Services.DbOperations;
+using AutoMapper;
 
 namespace News0.Web.Controllers
 {
     public class LoginController : Controller
     {
         private readonly UserService _userService;
+        private readonly IMapper _mapper;
 
-        public LoginController(UserService userService)
+        public LoginController(UserService userService, IMapper mapper)
         {
             _userService = userService;
+            _mapper = mapper;
         }
         public IActionResult Index()
         {
@@ -31,7 +34,8 @@ namespace News0.Web.Controllers
                 return RedirectToAction("Index");
             }
 
-            var realUser = _userService.Select().Where(u => u.Email.Equals(user.Email) && u.Password.Equals(user.Password)).FirstOrDefault();
+            var realUser = Data.UserList.All.Where(u => u.Email.Equals(user.Email) && u.Password.Equals(user.Password)).FirstOrDefault();
+            //var realUser = _userService.Select().Where(u => u.Email.Equals(user.Email) && u.Password.Equals(user.Password)).FirstOrDefault();
             if (realUser == null)
             {
                 return RedirectToAction("Index");
@@ -51,6 +55,7 @@ namespace News0.Web.Controllers
             }
 
             return View(Data.UserList.All.Find(u => u.Id == sessionId));
+            //return View(_mapper.Map<Models.UserViewModel>(_userService.Select().Find(u => u.Id == sessionId)));
         }
     }
 }
