@@ -294,6 +294,7 @@ namespace News0.Web.Controllers
             return View("Category/Translation/Create", model);
         }
 
+        [Route("Admin/Category/Delete")]
         public IActionResult CategoryDelete(int id)
         {
             _services.categoryService.Delete(_services.categoryService.Select(id));
