@@ -5,11 +5,18 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Extensions;
+using News0.Application.Services.DbOperations;
 
 namespace News0.Web.Controllers
 {
     public class LoginController : Controller
     {
+        private readonly UserService _userService;
+
+        public LoginController(UserService userService)
+        {
+            _userService = userService;
+        }
         public IActionResult Index()
         {
             return View();
@@ -24,7 +31,7 @@ namespace News0.Web.Controllers
                 return RedirectToAction("Index");
             }
 
-            Models.UserViewModel realUser = Data.UserList.All.Where(u => u.Email.Equals(user.Email) && u.Password.Equals(user.Password)).FirstOrDefault();
+            var realUser = _userService.Select().Where(u => u.Email.Equals(user.Email) && u.Password.Equals(user.Password)).FirstOrDefault();
             if (realUser == null)
             {
                 return RedirectToAction("Index");

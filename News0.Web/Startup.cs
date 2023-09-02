@@ -52,6 +52,7 @@ namespace News0.Web
             services.AddScoped<Application.Services.DbOperations.PostService>();
             services.AddScoped<Application.Services.DbOperations.CategoryService>();
             services.AddScoped<Application.Services.DbOperations.LanguageService>();
+            services.AddScoped<Application.Services.DbOperations.UserService>();
 
             var mapperConfig = new MapperConfiguration(cfg =>
             {

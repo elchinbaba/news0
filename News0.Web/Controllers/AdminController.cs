@@ -32,7 +32,7 @@ namespace News0.Web.Controllers
         }
         public IActionResult Post()
         {
-            var postDtos = _services.postService.Select();
+            var postDtos = _services.postService.Select().OrderByDescending(p => p.PublishDate).ToList();
 
             return View("Post/Index", _mapper.Map<List<Models.Post.PostViewModel>>(postDtos));
         }
@@ -57,8 +57,8 @@ namespace News0.Web.Controllers
             {
                 // Mapping from PostCreationViewModel to PostDto
                 var postDto = _mapper.Map<Domain.Dtos.PostDto>(model);
-                //postDto.PublisherId = (int)HttpContext.Session.GetInt32("Id");
-                postDto.PublisherId = 2;
+                postDto.PublisherId = (int)HttpContext.Session.GetInt32("Id");
+                //postDto.PublisherId = 2;
                 postDto.PublishDate = DateTime.Now;
 
                 // Call your service or repository method to save the post
@@ -96,10 +96,10 @@ namespace News0.Web.Controllers
             {
                 // Mapping from PostTranslationCreationViewModel to PostTranslationDto
                 var postTranslationDto = _mapper.Map<Domain.Dtos.PostTranslationDto>(model);
-                //postTranslationDto.PublisherId = (int)HttpContext.Session.GetInt32("Id");
+                postTranslationDto.PublisherId = (int)HttpContext.Session.GetInt32("Id");
                 postTranslationDto.Id = 0;
                 postTranslationDto.PostId = model.Id;
-                postTranslationDto.PublisherId = 2;
+                //postTranslationDto.PublisherId = 2;
                 postTranslationDto.PublishDate = DateTime.Now;
                 // Call your service or repository method to save the category
                 _services.postService.CreateTranslation(postTranslationDto);
@@ -303,8 +303,6 @@ namespace News0.Web.Controllers
 
         private bool IsAuthorized()
         {
-            return true;
-
             if (HttpContext.Session.GetInt32("Id") == null)
             {
                 return false;

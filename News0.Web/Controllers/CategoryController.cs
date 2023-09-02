@@ -10,11 +10,11 @@ namespace News0.Web.Controllers
 {
     public class CategoryController : Controller
     {
-        private readonly Services _services;
+        private readonly CategoryService _categoryService;
 
-        public CategoryController(Services services)
+        public CategoryController(CategoryService categoryService)
         {
-            _services = services;
+            _categoryService = categoryService;
         }
 
         public IActionResult Index()

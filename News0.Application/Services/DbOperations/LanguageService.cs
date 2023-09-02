@@ -24,6 +24,7 @@ namespace News0.Application.Services.DbOperations
 
             return _mapper.Map<List<Domain.Dtos.LanguageDto>>(languages);
         }
+
         public Domain.Dtos.LanguageDto Select(int id)
         {
             var language = _context.Languages.Find(id);
@@ -41,10 +42,12 @@ namespace News0.Application.Services.DbOperations
 
             _context.SaveChanges();
         }
+
         public void Update(Domain.Entities.Language language)
         {
 
         }
+
         public void Delete(Domain.Dtos.LanguageDto languageDto)
         {
             var language = _mapper.Map<Domain.Entities.Language>(languageDto);

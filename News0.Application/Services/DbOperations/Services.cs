@@ -9,12 +9,14 @@ namespace News0.Application.Services.DbOperations
         public PostService postService;
         public CategoryService categoryService;
         public LanguageService languageService;
+        public UserService userService;
 
-        public Services(PostService postService, CategoryService categoryService, LanguageService languageService)
+        public Services(PostService postService, CategoryService categoryService, LanguageService languageService, UserService userService)
         {
             this.postService = postService;
             this.categoryService = categoryService;
             this.languageService = languageService;
+            this.userService = userService;
         }
     }
 }

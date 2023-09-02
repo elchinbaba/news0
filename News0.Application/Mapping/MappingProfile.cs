@@ -34,6 +34,8 @@ namespace News0.Application.Mapping
             CreateMap<Domain.Entities.Post, Domain.Dtos.PostDto>();
                 //.ForMember(dest => dest.Category, opt => opt.MapFrom(src => src.Category.Name));
             CreateMap<Domain.Dtos.PostDto, Domain.Entities.Post>();
+
+            CreateMap<Domain.Entities.User, Domain.Dtos.UserDto>();
         }
     }
 }

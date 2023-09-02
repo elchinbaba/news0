@@ -17,7 +17,7 @@ namespace News0.Web.Data
             },
             new Models.UserViewModel()
             {
-                Id = 1,
+                Id = 3,
                 Email = "hi@gmail.com",
                 Password = "hi"
             }

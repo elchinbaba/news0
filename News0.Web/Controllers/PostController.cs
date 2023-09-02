@@ -10,19 +10,19 @@ namespace News0.Web.Controllers
 {
     public class PostController : Controller
     {
-        private readonly Services _services;
+        private readonly PostService _postService;
         private readonly IMapper _mapper;
 
-        public PostController(Services services, IMapper mapper)
+        public PostController(PostService postService, IMapper mapper)
         {
-            _services = services;
+            _postService = postService;
             _mapper = mapper;
         }
 
         [Route("News")]
         public IActionResult Index()
         {
-            var postDtos = _services.postService.Select();
+            var postDtos = _postService.Select().OrderByDescending(p => p.PublishDate).ToList();
 
             return View("Index", _mapper.Map<List<Models.Post.PostViewModel>>(postDtos));
         }
@@ -30,7 +30,7 @@ namespace News0.Web.Controllers
         [Route("News/{id:int}")]
         public IActionResult Details(int id)
         {
-            var postDto = _services.postService.Select(id);
+            var postDto = _postService.Select(id);
             if (postDto == null)
             {
                 return RedirectToAction("NotFound", "Home");
