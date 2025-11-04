@@ -1,23 +1,21 @@
-# Build stage
-FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+# Build stage using .NET Core 3.1 SDK
+FROM mcr.microsoft.com/dotnet/sdk:3.1 AS build
 WORKDIR /src
 
-# Copy everything
+# Copy all project files
 COPY . .
 
-# Publish ASP.NET project
+# Publish only the Web project
 RUN dotnet publish News0.Web/News0.Web.csproj -c Release -o /app/out
 
-# Runtime stage
-FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS final
+# Runtime stage using ASP.NET Core 3.1
+FROM mcr.microsoft.com/dotnet/aspnet:3.1 AS final
 WORKDIR /app
 
-# Copy build artifacts
 COPY --from=build /app/out .
 
-# Railway expects app to listen on 0.0.0.0:8080
+# Railway port binding
 ENV ASPNETCORE_URLS=http://0.0.0.0:8080
 EXPOSE 8080
 
-# Start the app
 ENTRYPOINT ["dotnet", "News0.Web.dll"]
